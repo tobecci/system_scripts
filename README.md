@@ -1,4 +1,4 @@
-# Sstem scripts
+# System scripts
 
 ## Description
 
