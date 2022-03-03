@@ -11,6 +11,7 @@ class Menu
 
     public function __construct()
     {
+        error_reporting(0);
         $this->generate_menu();
         $this->start();
     }
@@ -53,8 +54,9 @@ class Menu
             $this->display_menu();
             $menu_selection = (integer) fgets(STDIN);
             var_dump(is_int($menu_selection), $menu_selection);
-            echo($this->menu_list[$menu_selection]);
+            var_dump($this->menu_list[$menu_selection]);
         } catch (Throwable $th) {
+            echo "there was an error";
             // $this->start();
             // echo $th;
         }
