@@ -1,9 +1,7 @@
 <?php
 
-include "./lib/Command.php";
 include "./lib/Menu.php";
-
 use \Tobecci\Libs;
-$cmd  =  new \Tobecci\Libs\Command();
 $menu = new \Tobecci\Libs\Menu();
+$menu->start();
 // echo "hello world bitches";

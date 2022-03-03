@@ -1,29 +1,29 @@
 <?php
 
 namespace Tobecci\Libs;
-
-use Exception;
-use Throwable;
-
+include_once  __DIR__."/Command.php";
+include_once  __DIR__."/../modules/Scrcpy.php";
 class Menu
 {
     private $menu_list = [];
+    private $cmd;
 
     public function __construct()
     {
-        error_reporting(0);
+        // error_reporting(0);
+        $this->cmd = new \Tobecci\Libs\Command();
         $this->generate_menu();
-        $this->start();
     }
 
     public function run_phpmyadmin()
     {
-        // var_dump("funct 1 runs");
+        echo "running phpmyadmin\n";
     }
 
     public function launch_scrcpy_on_wifi()
     {
-        // var_dump("funct 2 runs");
+        $scrcpy = new \Tobecci\Modules\Scrcpy();
+        if(!$scrcpy->start()) $this->start();
     }
 
     public function generate_menu()
@@ -41,6 +41,7 @@ class Menu
 
     public function display_menu()
     {
+        echo "\n";
         foreach($this->menu_list as $key => $menu_item)
         {
             echo "[$key] $menu_item\n";
@@ -53,12 +54,15 @@ class Menu
         try {
             $this->display_menu();
             $menu_selection = (integer) fgets(STDIN);
-            var_dump(is_int($menu_selection), $menu_selection);
-            var_dump($this->menu_list[$menu_selection]);
-        } catch (Throwable $th) {
-            echo "there was an error";
-            // $this->start();
-            // echo $th;
+            $function_to_run = $this->menu_list[$menu_selection];
+            if( $function_to_run === NULL) throw new \Exception();
+            $this->cmd->clear_screen();
+            $this->$function_to_run();
+            $this->start();
+        } catch (\Exception $e) {
+            $this->cmd->clear_screen();
+            echo "Invalid Input\n";
+            $this->start();
         }
     }
 }
