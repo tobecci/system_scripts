@@ -42,6 +42,7 @@ class Scrcpy
             preg_match('/[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+/', $result[0], $matches);
             return $matches[0];
         }
+        echo("CONNECT TO THE WIFI\n");
         return false;
     }
 
@@ -66,6 +67,7 @@ class Scrcpy
 
     public function start_scrcpy()
     {
+        echo("*** starting scrcpy ***\n");
         $result = $this->cmd->run_command($this->scrcpy_start_command);
         if(!$result) return false;
         return true;
