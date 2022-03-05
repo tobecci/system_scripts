@@ -4,6 +4,12 @@
 
 Handle some automation on my personal workstation
 
+![terminal image example](./assets/img/screenshot_terminal.png)
+
+## Example: launching scrcpy on wifi
+
+![scrcpy on wifi](./assets/gif/launching_scrcpy.gif)
+
 ## Installation
 
 * clone repo
