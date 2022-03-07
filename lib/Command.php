@@ -9,16 +9,24 @@ namespace Tobecci\Libs;
 
 class Command
 {
-    private $clear_command = "clear";
+    private $linux_clear_command = "clear";
+    private $win_clear_command = "cls";
+    private $os = "";
 
     public function __construct()
     {
-        
+        $this->os = strtolower(PHP_OS);
     }
 
     public function clear_screen()
     {
-        echo shell_exec($this->clear_command);   
+        if($this->os === "linux")
+        {
+            echo shell_exec($this->linux_clear_command);
+            return;
+        }
+        shell_exec($this->win_clear_command);
+        return;
     }
 
     public function run_command($command, &$code=false)
