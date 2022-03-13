@@ -26,6 +26,17 @@ class Menu
         if(!$scrcpy->start()) $this->start();
     }
 
+    public function start_shizuku()
+    {
+        $command = "adb shell sh /storage/emulated/0/Android/data/moe.shizuku.privileged.api/start.sh";
+        $this->cmd->run_command($command);
+    }
+
+    public function exit()
+    {
+        die();
+    }
+
     public function generate_menu()
     {
         $i = 1;
