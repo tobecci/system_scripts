@@ -1,4 +1,4 @@
-#!/usr/bin/env php
+#!/usr/bin/env php8
 <?php
 
 include __DIR__."/lib/Menu.php";

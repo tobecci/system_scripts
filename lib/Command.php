@@ -29,12 +29,13 @@ class Command
         return;
     }
 
-    public function run_command($command, &$code=false)
+    public function run_command($command, $print_result=false, &$code=false,)
     {
         // surpresses error messages displayed on the terminal
         $output = [];
         $result_code = null;
         exec($command, $output, $result_code);
+        if($print_result) print_r($output);
         if($result_code === 0)
         {
             $code = true;

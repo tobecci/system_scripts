@@ -125,7 +125,7 @@ class Scrcpy
     {
         echo("*** killing adb server** \n");
         $code = false;
-        $result = $this->cmd->run_command($this->kill_sever_command, $code);
+        $result = $this->cmd->run_command($this->kill_sever_command, false, $code);
         if(!$code) return false;
         return true;
     }
