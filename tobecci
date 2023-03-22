@@ -1,7 +1,8 @@
-#!/usr/bin/env php8
+#!/usr/bin/env php
 <?php
 
-include __DIR__."/lib/Menu.php";
+include __DIR__ . "/lib/Menu.php";
 use \Tobecci\Libs;
+
 $menu = new \Tobecci\Libs\Menu();
 $menu->start();

@@ -48,10 +48,10 @@ class Menu
     public function get_ip_address_for_ftp()
     {
         $wifi_interface_name = "wlo1";
-        $command = "{$this->commands['show_network_devices']} | grep -i {$wifi_interface_name}";
-        $command_result = $this->cmd->run_command($command);
-        $matches = array();
-        $ipaddress_regexp = '/([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})/';
+        $command             = "{$this->commands['show_network_devices']} | grep -i {$wifi_interface_name}";
+        $command_result      = $this->cmd->run_command($command);
+        $matches             = array();
+        $ipaddress_regexp    = '/([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})/';
         preg_match($ipaddress_regexp, $command_result[0], $matches);
         echo "\n\nIP: $matches[0]\n\n";
     }
@@ -65,7 +65,7 @@ class Menu
     public function adb_list_packages_with_filter()
     {
         echo "input search string:";
-        $filter = (string) fgets(STDIN);
+        $filter  = (string) fgets(STDIN);
         $command = "adb shell 'pm list packages' | grep $filter";
         $this->cmd->run_command($command, true);
     }
@@ -74,7 +74,7 @@ class Menu
     {
         echo "input package name:";
         $package_name = (string) fgets(STDIN);
-        $command = "adb shell 'pm uninstall -k --user 0 $package_name'";
+        $command      = "adb shell 'pm uninstall -k --user 0 $package_name'";
         echo $command;
         $this->cmd->run_command($command, true);
     }
@@ -83,7 +83,7 @@ class Menu
     {
         echo "input package name:";
         $package_name = (string) fgets(STDIN);
-        $command = "adb shell 'pm install-existing $package_name'";
+        $command      = "adb shell 'pm install-existing $package_name'";
         echo $command;
         $this->cmd->run_command($command, true);
     }
@@ -91,13 +91,13 @@ class Menu
     public function adb_REINSTALL_system_app_second_method()
     {
         echo "input package name:";
-        $package_name = (string) fgets(STDIN);
+        $package_name        = (string) fgets(STDIN);
         $package_name        = substr($package_name, 0, strlen($package_name) - 1);
         $command_to_get_path = "adb shell pm dump $package_name | grep path";
         $path_command_result = $this->cmd->run_command($command_to_get_path);
         $path_command_result = $path_command_result[1];
 
-        $matches = array();
+        $matches         = array();
         $apk_path_regexp = '/\/.*\.apk/';
         preg_match($apk_path_regexp, $path_command_result, $matches);
         $apk_path = $matches[0];
@@ -109,23 +109,23 @@ class Menu
     public function output_to_ixio()
     {
         echo 'input command:';
-        $linux_command = (string) fgets(STDIN);
+        $linux_command   = (string) fgets(STDIN);
         $trimmed_command = rtrim($linux_command, '\n');
-        $linux_command = substr($linux_command, 0, strlen($linux_command) - 1);
-        $command = "$linux_command | curl -F 'f:1=<-' ix.io";
+        $linux_command   = substr($linux_command, 0, strlen($linux_command) - 1);
+        $command         = "$linux_command | curl -F 'f:1=<-' ix.io";
         echo $command;
         echo shell_exec($command);
     }
 
     public function kde_to_xfce()
     {
-        $command_to_install_new_de = "sudo pacman -S xfce4 xfce4-goodies pavucontrol blueman --noconfirm";
-        $command_to_enable_display_manager = "sudo systemctl enable lightdm --force";
-        $command_to_remove_old_de = "sudo pacman -Rcnc plasma kde-applications --noconfirm";
-        $command_to_set_env_file = "sudo cp /etc/environment-xfce /etc/environment";
+        $command_to_install_new_de              = "sudo pacman -S xfce4 xfce4-goodies pavucontrol blueman --noconfirm";
+        $command_to_enable_display_manager      = "sudo systemctl enable lightdm --force";
+        $command_to_remove_old_de               = "sudo pacman -Rcnc plasma kde-applications --noconfirm";
+        $command_to_set_env_file                = "sudo cp /etc/environment-xfce /etc/environment";
         $command_to_configure_libinput_gestures = "cp /home/tobecci/.config/libinput-gestures-xfce.conf /home/tobecci/.config/libinput-gestures.conf";
-        $command_to_reboot = "reboot";
-        $command = "$command_to_install_new_de && $command_to_enable_display_manager && $command_to_remove_old_de && " .
+        $command_to_reboot                      = "reboot";
+        $command                                = "$command_to_install_new_de && $command_to_enable_display_manager && $command_to_remove_old_de && " .
             "$command_to_set_env_file && $command_to_reboot";
         shell_exec($command);
         shell_exec($command_to_configure_libinput_gestures);
@@ -133,25 +133,26 @@ class Menu
 
     public function xfce_to_kde()
     {
-        $command_to_install_new_de = "sudo pacman -S plasma kde-applications --noconfirm";
-        $command_to_enable_display_manager = "sudo systemctl enable sddm --force";
-        $command_to_remove_old_de = "sudo pacman -Rcnc xfce4 xfce4-goodies pavucontrol blueman --noconfirm";
-        $command_to_set_env_file = "sudo cp /etc/environment-kde /etc/environment";
+        $command_to_install_new_de              = "sudo pacman -S plasma kde-applications --noconfirm";
+        $command_to_enable_display_manager      = "sudo systemctl enable sddm --force";
+        $command_to_remove_old_de               = "sudo pacman -Rcnc xfce4 xfce4-goodies pavucontrol blueman --noconfirm";
+        $command_to_set_env_file                = "sudo cp /etc/environment-kde /etc/environment";
         $command_to_configure_libinput_gestures = "cp /home/tobecci/.config/libinput-gestures-kde.conf /home/tobecci/.config/libinput-gestures.conf";
-        $command_to_reboot = "reboot";
-        $command = "$command_to_install_new_de && $command_to_enable_display_manager && $command_to_remove_old_de && " .
+        $command_to_reboot                      = "reboot";
+        $command                                = "$command_to_install_new_de && $command_to_enable_display_manager && $command_to_remove_old_de && " .
             "$command_to_set_env_file && $command_to_reboot";
         shell_exec($command);
         shell_exec($command_to_configure_libinput_gestures);
     }
 
-    function exit() {
+    function exit()
+    {
         die();
     }
 
     public function generate_menu()
     {
-        $i = 1;
+        $i             = 1;
         $class_methods = get_class_methods($this);
         foreach ($class_methods as $key => $function_name) {
             $ignored_functions = ["__construct", "generate_menu", "start", 'display_menu'];
@@ -175,7 +176,7 @@ class Menu
     {
         try {
             $this->display_menu();
-            $menu_selection = (integer) fgets(STDIN);
+            $menu_selection  = (integer) fgets(STDIN);
             $function_to_run = $this->menu_list[$menu_selection];
             if ($function_to_run === null) {
                 throw new \Exception();
@@ -184,7 +185,7 @@ class Menu
             $this->cmd->clear_screen();
             $this->$function_to_run();
             $this->start();
-        } catch (\Exception$e) {
+        } catch (\Exception $e) {
             $this->cmd->clear_screen();
             echo "Invalid Input\n";
             $this->start();
